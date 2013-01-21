@@ -25,7 +25,13 @@
     <div id="gradient"></div>
     
     <script type="text/javascript" charset="utf-8">
-        // YOUR CODE GOES HERE.
+        var element = document.getElementById('gradient');
+        var gradient = new Gradient(element, [0,255]);
+
+        function Gradient(el, stops) {
+            this.el = el;
+            this.stops = stops;
+        }
     </script>
 </body>
 </html>
