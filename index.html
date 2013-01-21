@@ -25,6 +25,13 @@
     <div id="gradient"></div>
     
     <script type="text/javascript" charset="utf-8">
+
+        /****************************
+         * Gradient class
+         * 
+         * Author: Nick Knudson
+         * Date: 2013-01-21
+         ****************************/
         function Gradient(el, stops) {
             // store the element
             this.el = el;
@@ -40,7 +47,7 @@
 
         }
         Gradient.prototype.clear = function() {
-            
+
             this.draw(); // redraw
         }
         Gradient.prototype.pop = function() {
@@ -78,6 +85,7 @@
             this.draw(); // redraw
         }
 
+        // run the program
         var element = document.getElementById('gradient');
         var gradient = new Gradient(element, [0,255]);
     </script>
