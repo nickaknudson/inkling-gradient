@@ -25,40 +25,61 @@
     <div id="gradient"></div>
     
     <script type="text/javascript" charset="utf-8">
-        var element = document.getElementById('gradient');
-        var gradient = new Gradient(element, [0,255]);
-
         function Gradient(el, stops) {
+            // store the element
             this.el = el;
-            this.stops = stops;
+            // initialize object's stops array
+            this.stops = new Array();
+            // add each stop to the object's list of stops
+            while(stops.length) {
+                // shift adds them in order
+                this.push(stops.shift());
+            }
         }
         Gradient.prototype.draw = function() {
 
         }
         Gradient.prototype.clear = function() {
             
+            this.draw(); // redraw
         }
         Gradient.prototype.pop = function() {
-            
+            var stop = this.stops.pop();
+            this.draw(); // redraw
+            return stop;
         }
         Gradient.prototype.push = function() {
-            
+            for(var i = 0; i < arguments.length; i++) {
+                this.stops.push(arguments[i]);
+            }
+            this.draw(); // redraw
         }
         Gradient.prototype.shift = function() {
-            
+            var stop = this.stops.shift();
+            this.draw(); // redraw
+            return stop;
         }
         Gradient.prototype.unshift = function() {
-            
+            for(var i = 0; i < arguments.length; i++) {
+                this.stops.unshift(arguments[i]);
+            }
+            this.draw(); // redraw
         }
         Gradient.prototype.reverse = function() {
-            
+            this.stops.reverse();
+            this.draw(); // redraw
         }
         Gradient.prototype.map = function(callback) {
-            
+
+            this.draw(); // redraw
         }
         Gradient.prototype.sort = function(callback) {
-            
+
+            this.draw(); // redraw
         }
+
+        var element = document.getElementById('gradient');
+        var gradient = new Gradient(element, [0,255]);
     </script>
 </body>
 </html>
