@@ -58,12 +58,14 @@
             }
             var gsize = Math.floor(size / (this.stops.length - 1)); // gradient sizes
             console.log(gsize);
+            var outter = this.el; // start with this outter element
             for(var i = 0; i < (this.stops.length - 1); i++) {
                 var stop = this.stops[i]; // current stop
                 var nstop = this.stops[(i + 1)]; // next stop
                 for(var j = 0; j < gsize; j++) {
-                    var inc = Math.abs(stop - Math.round(j * Math.abs(stop - nstop) / gsize));
-                    console.log(inc);
+                    var inc = Math.round(j * Math.abs(stop - nstop) / gsize);
+                    var color = Math.abs(stop - inc);
+                    console.log(inc, color);
                 }
             }
         }
