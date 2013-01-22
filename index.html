@@ -44,7 +44,25 @@
             }
         }
         Gradient.prototype.draw = function() {
+            if(this.el.offsetWidth == this.el.offsetHeight) {
+                var size = this.el.offsetWidth / 2;
+            } else {
+                throw "Gradient element is not square.";
+                return false;
+            }
+            var innerCircle = function(outter, color) {
 
+            }
+            var gsize = Math.floor(size / (this.stops.length - 1)); // gradient sizes
+            console.log(gsize);
+            for(var i = 0; i < (this.stops.length - 1); i++) {
+                var stop = this.stops[i]; // current stop
+                var nstop = this.stops[(i + 1)]; // next stop
+                for(var j = 0; j < gsize; j++) {
+                    var inc = Math.round(j * Math.abs(stop - nstop) / gsize);
+                    console.log(inc);
+                }
+            }
         }
         Gradient.prototype.clear = function() {
 
