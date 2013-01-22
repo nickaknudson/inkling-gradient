@@ -62,7 +62,7 @@
                 var stop = this.stops[i]; // current stop
                 var nstop = this.stops[(i + 1)]; // next stop
                 for(var j = 0; j < gsize; j++) {
-                    var inc = Math.round(j * Math.abs(stop - nstop) / gsize);
+                    var inc = Math.abs(stop - Math.round(j * Math.abs(stop - nstop) / gsize));
                     console.log(inc);
                 }
             }
