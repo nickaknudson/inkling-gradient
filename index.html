@@ -41,6 +41,12 @@
             this.push.apply(this, stops);
         }
         Gradient.prototype.draw = function() {
+            // Gradient must contain two or more stops
+            if (this.stops.length == 1) {
+                throw "Gradient must contain two or more stops."
+                return false;
+            }
+            // element must be square
             if(this.el.offsetWidth == this.el.offsetHeight) {
                 var size = this.el.offsetWidth / 2;
             } else {
