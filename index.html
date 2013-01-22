@@ -14,6 +14,7 @@
             margin: 0 auto;
             width: 400px;
             height: 400px;
+            z-index: 0;
         }
         
         #gradient div {
@@ -53,12 +54,23 @@
                 throw "Gradient element is not square.";
                 return false;
             }
-            var innerCircle = function(outter, color) {
-
+            function innerCircle(outter, color, isize, index) {
+                var circle = document.createElement('div');
+                circle.style.width = circle.style.height = isize * 2 + "px"; // width and height
+                circle.style.WebkitBorderRadius = circle.style.MozBorderRadius = circle.style.borderRadius = isize + "px"; // circle shape
+                //circle.style.left = circle.style.top = index + "px";
+                //circle.style.borderColor = "rgb("+ [color,color,color].join(',') + ")";
+                circle.style.backgroundColor = "rgb("+ [color,color,color].join(',') + ")";
+                //circle.style.borderWidth = "1px";
+                circle.style.zIndex = index;
+                console.log(circle, color, isize, index);
+                outter.appendChild(circle);
+                return circle;
             }
             var gsize = Math.floor(size / (this.stops.length - 1)); // gradient sizes
             console.log(gsize);
             var outter = this.el; // start with this outter element
+            var index = 0;
             for(var i = 0; i < (this.stops.length - 1); i++) {
                 var stop = this.stops[i]; // current stop
                 var nstop = this.stops[(i + 1)]; // next stop
@@ -66,6 +78,9 @@
                     var inc = Math.round(j * Math.abs(stop - nstop) / gsize);
                     var color = Math.abs(stop - inc);
                     console.log(inc, color);
+                    size--;
+                    index++;
+                    outter = innerCircle(outter, color, size, index);
                 }
             }
         }
