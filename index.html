@@ -30,7 +30,7 @@
 </head>
 <body>
     <div id="gradient"></div>
-    <div id="next"><a href="#" onClick="next();">Next</a></div>
+    <div id="next"><a href="#" onClick="next();">Next</a>&nbsp;|&nbsp;<a href="#" onClick="reset();">Reset</a></div>
     
     <script type="text/javascript" charset="utf-8">
 
@@ -49,9 +49,9 @@
             this.push.apply(this, stops);
         }
         Gradient.prototype.draw = function() {
+            this.el.innerHTML = "";
             // Gradient is cleared
             if (this.stops.length == 0) {
-                this.el.innerHTML = "";
                 return true;
             }
             // Gradient must contain two or more stops
@@ -90,6 +90,12 @@
                     outter = innerCircle(outter, color, size, index);
                 }
             }
+            // draw any remaining circles from rounding errors
+            while(index < 200) {
+                size--;
+                index++;
+                outter = innerCircle(outter, color, size, index);
+            }
             return true;
         }
         Gradient.prototype.clear = function() {
@@ -124,7 +130,7 @@
         }
         Gradient.prototype.map = function(callback) {
             for(var i = 0; i < this.stops.length; i++) {
-                callback.call(this, this.stops); // call the callback for each
+                this.stops[i] = callback.call(this, this.stops[i]); // call the callback for each
             }
             this.draw(); // redraw
         }
@@ -133,35 +139,43 @@
             this.draw(); // redraw
         }
 
-        // run the program
-        var element = document.getElementById('gradient');
-        var gradient = new Gradient(element, [0,255]);
+        // reset the tests
+        var reset = function() {
 
-        // overwritting test function
-        // just keep calling "next()"
-        var next = function() {
-            gradient.push(0, 255);
-        next = function() {
-            gradient.shift();
-        next = function() {
-            gradient.map(function(stop) {
-                return Math.min(255, stop + 100);
-            });
-        next = function() {
-            gradient.unshift(0);
-            gradient.pop();
-        next = function() {
-            gradient.clear();
-            console.log( "gradient.clear();" );
+            // run the program
+            var element = document.getElementById('gradient');
+            var gradient = new Gradient(element, [0,255]);
+            console.log( "gradient = new Gradient(element, [0,255]);" )
+
+            // overwritting test function
+            // just keep calling "next()"
+            window.next = function() {
+                gradient.push(0, 255);
+            next = function() {
+                gradient.shift();
+            next = function() {
+                gradient.map(function(stop) {
+                    return Math.min(255, (stop + 100));
+                });
+            next = function() {
+                gradient.unshift(0);
+                gradient.pop();
+            next = function() {
+                gradient.clear();
+                console.log( "gradient.clear();" );
+            }
+                console.log( "gradient.unshift();\ngradient.pop();" );
+            }
+                console.log( "gradient.map(...);" );
+            }
+                console.log( "gradient.shift();" );
+            }
+                console.log( "gradient.push(0, 255);" );
+            }
+
         }
-            console.log( "gradient.unshift();\ngradient.pop();" );
-        }
-            console.log( "gradient.map(...);" );
-        }
-            console.log( "gradient.shift();" );
-        }
-            console.log( "gradient.push(0, 255);" );
-        }
+        // run the program
+        reset();
     </script>
 </body>
 </html>
