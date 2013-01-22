@@ -58,10 +58,8 @@
                 var circle = document.createElement('div');
                 circle.style.width = circle.style.height = isize * 2 + "px"; // width and height
                 circle.style.WebkitBorderRadius = circle.style.MozBorderRadius = circle.style.borderRadius = isize + "px"; // circle shape
-                //circle.style.left = circle.style.top = index + "px";
-                //circle.style.borderColor = "rgb("+ [color,color,color].join(',') + ")";
+                circle.style.left = circle.style.top = "1px";
                 circle.style.backgroundColor = "rgb("+ [color,color,color].join(',') + ")";
-                //circle.style.borderWidth = "1px";
                 circle.style.zIndex = index;
                 console.log(circle, color, isize, index);
                 outter.appendChild(circle);
