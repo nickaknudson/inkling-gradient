@@ -42,6 +42,11 @@
             this.push.apply(this, stops);
         }
         Gradient.prototype.draw = function() {
+            // Gradient is cleared
+            if (this.stops.length == 0) {
+                this.el.innerHTML = "";
+                return true;
+            }
             // Gradient must contain two or more stops
             if (this.stops.length == 1) {
                 throw "Gradient must contain two or more stops."
@@ -61,12 +66,10 @@
                 circle.style.left = circle.style.top = "1px";
                 circle.style.backgroundColor = "rgb("+ [color,color,color].join(',') + ")";
                 circle.style.zIndex = index;
-                console.log(circle, color, isize, index);
                 outter.appendChild(circle);
                 return circle;
             }
             var gsize = Math.floor(size / (this.stops.length - 1)); // gradient sizes
-            console.log(gsize);
             var outter = this.el; // start with this outter element
             var index = 0;
             for(var i = 0; i < (this.stops.length - 1); i++) {
@@ -75,15 +78,15 @@
                 for(var j = 0; j < gsize; j++) {
                     var inc = Math.round(j * Math.abs(stop - nstop) / gsize);
                     var color = Math.abs(stop - inc);
-                    console.log(inc, color);
                     size--;
                     index++;
                     outter = innerCircle(outter, color, size, index);
                 }
             }
+            return true;
         }
         Gradient.prototype.clear = function() {
-
+            this.stops = new Array(); // just clear all the stops by making a new array
             this.draw(); // redraw
         }
         Gradient.prototype.pop = function() {
@@ -113,17 +116,45 @@
             this.draw(); // redraw
         }
         Gradient.prototype.map = function(callback) {
-
+            for(var i = 0; i < this.stops.length; i++) {
+                callback.call(this, this.stops); // call the callback for each
+            }
             this.draw(); // redraw
         }
         Gradient.prototype.sort = function(callback) {
-
+            this.stops.sort(callback); // the built-in Array.sort also takes a callback
             this.draw(); // redraw
         }
 
         // run the program
         var element = document.getElementById('gradient');
         var gradient = new Gradient(element, [0,255]);
+
+        // overwritting test function
+        // just keep calling "next()"
+        var next = function() {
+            gradient.push(0, 255);
+        next = function() {
+            gradient.shift();
+        next = function() {
+            gradient.map(function(stop) {
+                return Math.min(255, stop + 100);
+            });
+        next = function() {
+            gradient.unshift(0);
+            gradient.pop();
+        next = function() {
+            gradient.clear();
+            return "gradient.clear();"
+        }
+            return "gradient.unshift();\ngradient.pop();"
+        }
+            return "gradient.map(...);"
+        }
+            return "gradient.shift();"
+        }
+            return "gradient.push(0, 255);"
+        }
     </script>
 </body>
 </html>
