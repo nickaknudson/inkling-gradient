@@ -37,11 +37,8 @@
             this.el = el;
             // initialize object's stops array
             this.stops = new Array();
-            // add each stop to the object's list of stops
-            while(stops.length) {
-                // shift adds them in order
-                this.push(stops.shift());
-            }
+            // add stops to the object's list of stops
+            this.push.apply(this, stops);
         }
         Gradient.prototype.draw = function() {
             if(this.el.offsetWidth == this.el.offsetHeight) {
