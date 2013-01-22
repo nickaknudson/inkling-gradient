@@ -20,10 +20,17 @@
         #gradient div {
             position: absolute;
         }
+
+        #next {
+            position: relative;
+            margin: 0 auto;
+            width: 400px;
+        }
     </style>
 </head>
 <body>
     <div id="gradient"></div>
+    <div id="next"><a href="#" onClick="next();">Next</a></div>
     
     <script type="text/javascript" charset="utf-8">
 
@@ -145,15 +152,15 @@
             gradient.pop();
         next = function() {
             gradient.clear();
-            return "gradient.clear();"
+            console.log( "gradient.clear();" );
         }
-            return "gradient.unshift();\ngradient.pop();"
+            console.log( "gradient.unshift();\ngradient.pop();" );
         }
-            return "gradient.map(...);"
+            console.log( "gradient.map(...);" );
         }
-            return "gradient.shift();"
+            console.log( "gradient.shift();" );
         }
-            return "gradient.push(0, 255);"
+            console.log( "gradient.push(0, 255);" );
         }
     </script>
 </body>
